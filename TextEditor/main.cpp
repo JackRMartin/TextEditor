@@ -32,6 +32,7 @@ int WINAPI WinMain(HINSTANCE h_instance, HINSTANCE h_prev_instance,
 		return 0;
 	}
 	test
+		test
 
 
 
