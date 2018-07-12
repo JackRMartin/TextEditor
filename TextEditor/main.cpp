@@ -31,6 +31,7 @@ int WINAPI WinMain(HINSTANCE h_instance, HINSTANCE h_prev_instance,
 		MessageBox(NULL, "Window Registration Failed", "Error!", MB_ICONEXCLAMATION | MB_OK);
 		return 0;
 	}
+	test
 
 
 
