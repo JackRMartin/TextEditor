@@ -6,6 +6,24 @@
 // create a toolbar in the window for saving the current file.
 const char g_sz_class_name[] = "myWindowClass";
 
+LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM w_param, LPARAM l_param)
+{
+
+	switch (msg)
+	{
+	case WM_CLOSE:
+		DestroyWindow(hwnd);
+		break;
+	case WM_DESTROY:
+		PostQuitMessage(0);
+		break;
+	default:
+		return DefWindowProc(hwnd, msg, w_param, l_param);
+	}
+
+	return 0;
+}
+
 int WINAPI WinMain(HINSTANCE h_instance, HINSTANCE h_prev_instance,
 	LPSTR lp_cmd_line, int n_cmd_show)
 {
@@ -32,5 +50,28 @@ int WINAPI WinMain(HINSTANCE h_instance, HINSTANCE h_prev_instance,
 		return 0;
 	}
 
-	return 0;
+	hwnd = CreateWindowEx(
+		WS_EX_CLIENTEDGE,
+		g_sz_class_name,
+		"TextEditor",
+		WS_OVERLAPPEDWINDOW,
+		CW_USEDEFAULT, CW_USEDEFAULT, 240, 120,
+		NULL, NULL, h_instance, NULL);
+
+	if (hwnd == NULL)
+	{
+		MessageBox(NULL, "Window Creation Failed", "Error!", MB_ICONEXCLAMATION | MB_OK);
+		return 0;
+	}
+
+	ShowWindow(hwnd, n_cmd_show);
+	UpdateWindow(hwnd);
+
+	while (GetMessage(&msg, NULL, 0, 0) > 0)
+	{
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+	}
+	return msg.wParam;
+
 }
